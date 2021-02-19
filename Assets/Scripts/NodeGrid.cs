@@ -2,39 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeGrid
+public class NodeGrid<TGridObject>
 {
-    int width;
-    int height;
-    int depth;
-    int nodeSize;
-
-    int[,,] gridArray;
+    readonly TGridObject[,,] gridArray;
+    readonly TextMesh[,,] textArray;
 
     Color drawColor = Color.white;
 
     // Constructs the array using given width, height, and depth
-    public NodeGrid(int width, int height, int depth, int nodeSize)
+    public NodeGrid(int width, int height, int depth, int nodeSize, Vector3 origin, System.Func<TGridObject> createGridObject)
     {
-        this.width = width;
-        this.height = height;
-        this.depth = depth;
+        gridArray = new TGridObject[width, height, depth];
+        textArray = new TextMesh[width, height, depth];
 
-        gridArray = new int[width, height, depth];
-
-        // Cycle through 3D array to create world text
+        // Cycle through 3D array to create world text and grid object
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < gridArray.GetLength(0); y++)
             {
                 for (int z = 0; z < gridArray.GetLength(0); z++)
                 {
-                    DrawText(
-                        gridArray[x, y, z].ToString(),
+                    // Create text
+                    textArray[x, y, z] = DrawText(
+                        gridArray[x, y, z]?.ToString(),
                         drawColor,
                         null,
                         GetPosition(x, y, z) + (new Vector3(nodeSize, nodeSize, nodeSize) / 2f)
                     );
+
+                    // Create grid object
+                    gridArray[x, y, z] = createGridObject();
                 }
             }
         }
@@ -62,19 +59,45 @@ public class NodeGrid
             }
         }
 
-
         // Convert to grid position using nodeSize
         Vector3 GetPosition(int x, int y, int z)
         {
-            return new Vector3(x, y, z) * nodeSize;
+            return new Vector3(x, y, z) * nodeSize + origin;
         }
 
         // Convert world position to XYZ coordinates
         void GetXYZ(Vector3 worldPosition, out int x, out int y, out int z)
         {
-            x = Mathf.FloorToInt(worldPosition.x / nodeSize);
-            y = Mathf.FloorToInt(worldPosition.y / nodeSize);
-            z = Mathf.FloorToInt(worldPosition.z / nodeSize);
+            x = Mathf.FloorToInt((worldPosition - origin).x / nodeSize);
+            y = Mathf.FloorToInt((worldPosition - origin).y / nodeSize);
+            z = Mathf.FloorToInt((worldPosition - origin).z / nodeSize);
+        }
+
+        // Sets the value of a node using provided xyz coords
+        void SetValueXYZ(int x, int y, int z, TGridObject value)
+        {
+            gridArray[x, y, z] = value;
+            textArray[x, y, z].text = gridArray[x, y, z].ToString();
+        }
+
+        // Sets the value of a node using worldposition
+        void SetValueWorldPos(Vector3 worldPos, TGridObject value)
+        {
+            GetXYZ(worldPos, out int x, out int y, out int z);
+            SetValueXYZ(x, y, z, value);
+        }
+
+        // Get the value of a node using provided xyz coords
+        TGridObject GetValueXYZ(int x, int y, int z)
+        {
+            return gridArray[x, y, z];
+        }
+
+        // Get the value of a node using worldposition
+        TGridObject GetValueWorldPos(Vector3 worldPos)
+        {
+            GetXYZ(worldPos, out int x, out int y, out int z);
+            return GetValueXYZ(x, y, z);
         }
 
         // Create a TextMesh game object at specified position
@@ -82,7 +105,7 @@ public class NodeGrid
             string text,
             Color color,
             Transform parent = null,
-            Vector3 localPosition = default(Vector3),
+            Vector3 localPosition = default,
             int fontSize = 20
         )
         {
@@ -97,6 +120,8 @@ public class NodeGrid
             textMesh.fontSize = fontSize;
             textMesh.color = color;
             textMesh.alignment = TextAlignment.Center;
+
+            textMesh.tag = "Value";
 
             return textMesh;
         }
@@ -114,6 +139,7 @@ public class NodeGrid
             lineRenderer.endWidth = lineWidth;
             lineRenderer.SetPosition(0, start);
             lineRenderer.SetPosition(1, end);
+            lineRenderer.tag = "Line";
 
             return (lineRenderer);
         }
