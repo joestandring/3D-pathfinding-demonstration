@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Camera and program control
 public class Control : MonoBehaviour
 {
     bool linesEnabled = true;

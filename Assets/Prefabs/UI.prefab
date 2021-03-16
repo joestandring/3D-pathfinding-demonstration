@@ -1979,32 +1979,49 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Move - W, A, S, D
+  m_text: 'CAMERA CONTROL
+
+    Move - W, A, S, D
 
     Rotate - Mouse
 
     Up - Q
 
-    Down - E
+    Down
+    - E
 
-    Increase
-    camera speed - Left shift
+    Increase camera speed - Left shift
 
     Reset camera - R
 
-    Exit camera control - Escape
+    Exit camera
+    control - Escape
 
-    Enter
-    camera control - LMB
+    Enter camera control - LMB
 
 
-    Toggle node lines - L
+    VISUALS
+
+    Toggle node
+    lines - L
 
     Toggle node values - V
 
 
-    Config
-    menu - C'
+    CONFIG
+
+    Config menu - C
+
+
+    PATHFINDING
+
+    Perform
+    pathfinding - SPACE
+
+    Visualise step forward - .
+
+    Auto step to end of
+    path - .'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

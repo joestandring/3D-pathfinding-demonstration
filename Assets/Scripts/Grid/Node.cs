@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+// A node containing data in the grid
+public class Node
 {
-    NodeGrid<Node> grid;
-    int x;
-    int y;
-    int z;
+#pragma warning disable IDE0052 // Remove unread private members
+    readonly NodeGrid<Node> grid;
+#pragma warning restore IDE0052 // Remove unread private members
+    public int x;
+    public int y;
+    public int z;
 
     // Travel cost
     public int g;
@@ -24,6 +27,12 @@ public class Node : MonoBehaviour
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    // Calculate the f cost
+    public void GetF()
+    {
+        f = g + h;
     }
 
     public override string ToString()
