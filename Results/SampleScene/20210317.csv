@@ -1,0 +1,6 @@
+'Algorythm', 'Time to complete', 'Number of pathed nodes', 'Total nodes searched', 'Open list size', 'Closed list size', 'Total move cost (g)'
+AStar, 3082, 10, 160, 151, 9, 153
+'Algorythm', 'Time to complete (ms)', 'Number of pathed nodes', 'Total nodes searched', 'Open list size', 'Closed list size', 'Total move cost (g)'
+AStar, 3123, 10, 160, 151, 9, 153
+'Algorythm', 'Time to complete (ms)', 'Number of pathed nodes', 'Total nodes searched', 'Open list size', 'Closed list size', 'Total move cost (g)'
+AStar, 3318, 10, 160, 151, 9, 153

@@ -13,17 +13,22 @@ public class NodeGrid<TGridObject>
     Vector3 origin;
 
     readonly TGridObject[,,] gridArray;
-    readonly TextMesh[,,] textArray;
+    //readonly TextMesh[,,] textArray;
 
     Color drawColor = Color.white;
+
+    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
+
+    public class OnGridObjectChangedEventArgs : EventArgs
+    {
+        public int x;
+        public int y;
+        public int z;
+    }
 
     // Constructs the array using given width, height, and depth
     public NodeGrid(int width, int height, int depth, int nodeSize, Vector3 origin, Func<NodeGrid<TGridObject>, int, int, int, TGridObject> createGridObject)
     {
-        #pragma warning disable UNT0010 // Component instance creation
-        Utils utils = new Utils();
-        #pragma warning restore UNT0010 // Component instance creation
-
         this.width = width;
         this.height = height;
         this.depth = depth;
@@ -31,22 +36,22 @@ public class NodeGrid<TGridObject>
         this.nodeSize = nodeSize;
 
         gridArray = new TGridObject[width, height, depth];
-        textArray = new TextMesh[width, height, depth];
+        //textArray = new TextMesh[width, height, depth];
 
         // Cycle through 3D array to create world text and grid object
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
-            for (int y = 0; y < gridArray.GetLength(0); y++)
+            for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                for (int z = 0; z < gridArray.GetLength(0); z++)
+                for (int z = 0; z < gridArray.GetLength(2); z++)
                 {
                     // Create text
-                    textArray[x, y, z] = utils.DrawText(
-                        "0",
-                        drawColor,
-                        null,
-                        GetPosition(x, y, z) + (new Vector3(nodeSize, nodeSize, nodeSize) / 2f)
-                    );
+                    //textArray[x, y, z] = utils.DrawText(
+                    //    "0",
+                    //    drawColor,
+                    //    null,
+                    //    GetPosition(x, y, z) + (new Vector3(nodeSize, nodeSize, nodeSize) / 2f)
+                    //);
 
                     // Create grid object
                     gridArray[x, y, z] = createGridObject(this, x, y, z);
@@ -55,33 +60,36 @@ public class NodeGrid<TGridObject>
         }
 
         // Draw grid of lines
-        for (int y = 0; y <= gridArray.GetLength(0); y++)
+        for (int y = 0; y <= gridArray.GetLength(1); y++)
         {
-            for(int z = 0; z <= gridArray.GetLength(0); z++)
+            for(int z = 0; z <= gridArray.GetLength(2); z++)
             {
-                utils.DrawLine(GetPosition(0, y, z), GetPosition(width, y, z), drawColor);
+                DrawLine(GetPosition(0, y, z), GetPosition(width, y, z), drawColor);
             }
         }
         for (int x = 0; x <= gridArray.GetLength(0); x++)
         {
-            for (int z = 0; z <= gridArray.GetLength(0); z++)
+            for (int z = 0; z <= gridArray.GetLength(2); z++)
             {
-                utils.DrawLine(GetPosition(x, 0, z), GetPosition(x, height, z), drawColor);
+                DrawLine(GetPosition(x, 0, z), GetPosition(x, height, z), drawColor);
             }
         }
         for (int x = 0; x <= gridArray.GetLength(0); x++)
         {
-            for (int y = 0; y <= gridArray.GetLength(0); y++)
+            for (int y = 0; y <= gridArray.GetLength(1); y++)
             {
-                utils.DrawLine(GetPosition(x, y, 0), GetPosition(x, y, depth), drawColor);
+                DrawLine(GetPosition(x, y, 0), GetPosition(x, y, depth), drawColor);
             }
         }
+    }
 
-        Debug.Log("Grid created with width: " + width + " height: " + height + " depth: " + depth);
+    public void TriggerGridObjectChanged(int x, int y, int z)
+    {
+        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, y = y, z = z });
     }
 
     // Convert to grid position using nodeSize
-    Vector3 GetPosition(int x, int y, int z)
+    public Vector3 GetPosition(int x, int y, int z)
     {
         return new Vector3(x, y, z) * nodeSize + origin;
     }
@@ -157,5 +165,23 @@ public class NodeGrid<TGridObject>
     public int GetNodeSize()
     {
         return nodeSize;
+    }
+
+    // Draw a line between two specified positions (emulating Debug.Drawline)
+    LineRenderer DrawLine(Vector3 start, Vector3 end, Color color, float lineWidth = 0.1f)
+    {
+        LineRenderer lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.material = new Material(Shader.Find("Unlit/Texture"));
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
+        lineRenderer.SetPosition(0, start);
+        lineRenderer.SetPosition(1, end);
+        lineRenderer.tag = "Line";
+
+        return (lineRenderer);
     }
 }

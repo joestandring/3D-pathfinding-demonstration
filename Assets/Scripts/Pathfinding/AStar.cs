@@ -13,9 +13,9 @@ public class AStar
     readonly NodeGrid<Node> grid;
 
     // List of nodes not yet checked
-    List<Node> openList;
+    public List<Node> openList;
     // Lsit of nodes checked
-    List<Node> closedList;
+    public List<Node> closedList;
 
     // Create the grid
     public AStar(int width, int height, int depth, int nodeSize, Vector3 origin)
@@ -58,7 +58,6 @@ public class AStar
 
         startNode.g = 0;
         startNode.h = GetDistance(startNode, endNode);
-        Debug.Log("DISTANCE: " + GetDistance(startNode, endNode));
         startNode.GetF();
 
         // Get starting snapshot
@@ -90,7 +89,13 @@ public class AStar
             {
                 if (closedList.Contains(neighbor)) continue;
 
-                Debug.Log(current + " " + neighbor);
+                // Only add to neighbor list if node is walkable
+                if (!neighbor.isWalkable)
+                {
+                    closedList.Add(neighbor);
+                    continue;
+                }
+
                 int tentativeG = current.g + GetDistance(current, neighbor);
 
                 // If there is a better path
@@ -230,12 +235,12 @@ public class AStar
             {
                 // Forward left
                 neighbors.Add(GetNode(current.x - 1, current.y, current.z + 1));
-                if (current.y - 1 < grid.GetHeight())
+                if (current.y + 1 < grid.GetHeight())
                 {
                     // Forward left up
                     neighbors.Add(GetNode(current.x - 1, current.y + 1, current.z + 1));
                 }
-                if (current.y - 1 < grid.GetHeight())
+                if (current.y - 1 >= 0)
                 {
                     // Forward left down
                     neighbors.Add(GetNode(current.x - 1, current.y - 1, current.z + 1));
@@ -278,6 +283,7 @@ public class AStar
         }
 
         path.Reverse();
+
         return path;
     }
 
@@ -305,6 +311,7 @@ public class AStar
         int straight = distances[2] - (diagonal3D + diagonal);
 
         int finalDist = (diagonal3DCost * diagonal3D) + (diagonalCost * diagonal) + (straightCost * straight);
+
         return finalDist;
     }
 

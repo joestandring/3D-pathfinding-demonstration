@@ -5,9 +5,8 @@ using UnityEngine;
 // A node containing data in the grid
 public class Node
 {
-#pragma warning disable IDE0052 // Remove unread private members
     readonly NodeGrid<Node> grid;
-#pragma warning restore IDE0052 // Remove unread private members
+
     public int x;
     public int y;
     public int z;
@@ -19,6 +18,7 @@ public class Node
     // total cost (g + h)
     public int f;
 
+    public bool isWalkable;
     public Node lastNode;
 
     public Node(NodeGrid<Node> grid, int x, int y, int z)
@@ -27,6 +27,7 @@ public class Node
         this.x = x;
         this.y = y;
         this.z = z;
+        isWalkable = true;
     }
 
     // Calculate the f cost
@@ -38,5 +39,12 @@ public class Node
     public override string ToString()
     {
         return x + ", " + y + ", " + z;
+    }
+
+    // Toggle if node is walkable
+    public void SetWalkable(bool isWalkable)
+    {
+        this.isWalkable = isWalkable;
+        grid.TriggerGridObjectChanged(x, y, z);
     }
 }

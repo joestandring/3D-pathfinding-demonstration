@@ -21,6 +21,10 @@ public class StepVisual : MonoBehaviour
     public Material nodeSearching;
     public Material nodeWall;
 
+    int snapshotIndex = 0;
+
+    public Control control;
+
     void Awake()
     {
         Instance = this;
@@ -30,10 +34,28 @@ public class StepVisual : MonoBehaviour
 
     void Update()
     {
+        // Go to previous snapshot
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            ShowPreviousSnapshot();
+        }
+
         // Advance one snapshot
-        if (Input.GetKeyDown(KeyCode.Period))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             ShowNextSnapshot();
+        }
+
+        // Go to first snapshot
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ShowFirstSnapshot();
+        }
+
+        // Go to last snapshot
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ShowLastSnapshot();
         }
 
         if (Input.GetKeyDown(KeyCode.Slash))
@@ -50,7 +72,7 @@ public class StepVisual : MonoBehaviour
             {
                 snapshotTime += timerMax;
                 ShowNextSnapshot();
-                if (gridSnapshotActions.Count == 0)
+                if (snapshotIndex == gridSnapshotActions.Count - 1)
                 {
                     autoShowSnapshots = false;
                 }
@@ -115,14 +137,46 @@ public class StepVisual : MonoBehaviour
         }
     }
 
+    // Advances to the next snapshoy
     void ShowNextSnapshot()
     {
-        if (gridSnapshotActions.Count > 0)
+        if (snapshotIndex < gridSnapshotActions.Count - 1)
         {
-            GridSnapshotAction gridSnapshotAction = gridSnapshotActions[0];
-            gridSnapshotActions.RemoveAt(0);
+            snapshotIndex++;
+            GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
             gridSnapshotAction.TriggerAction();
+            control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
         }
+    }
+
+    // Shows the previous snapshot
+    void ShowPreviousSnapshot()
+    {
+        if (snapshotIndex > 0)
+        {
+            snapshotIndex--;
+            GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
+            gridSnapshotAction.TriggerAction();
+            control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" +gridSnapshotActions.Count;
+        }
+    }
+
+    // Go to first snapshot
+    void ShowFirstSnapshot()
+    {
+        snapshotIndex = 0;
+        GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
+        gridSnapshotAction.TriggerAction();
+        control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
+    }
+
+    // Go to last snapshot
+    void ShowLastSnapshot()
+    {
+        snapshotIndex = gridSnapshotActions.Count - 1;
+        GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
+        gridSnapshotAction.TriggerAction();
+        control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
     }
 
     public void ClearSnapshots()

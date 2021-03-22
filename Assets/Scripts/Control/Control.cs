@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // Camera and program control
 public class Control : MonoBehaviour
@@ -14,6 +15,8 @@ public class Control : MonoBehaviour
     GameObject[] values;
     GameObject menu;
     GameObject cam;
+    public Text snapshotStatus;
+    public Text consoleText;
 
     public GameObject ui;
 
@@ -21,11 +24,12 @@ public class Control : MonoBehaviour
     {
         Instantiate(ui);
 
-        // Get all lines
         lines = GameObject.FindGameObjectsWithTag("Line");
         values = GameObject.FindGameObjectsWithTag("Value");
         menu = GameObject.FindGameObjectWithTag("Menu");
         cam = GameObject.FindGameObjectWithTag("MainCamera");
+        snapshotStatus = GameObject.FindGameObjectWithTag("Status").GetComponent<Text>();
+        consoleText = GameObject.FindGameObjectWithTag("Console").GetComponent<Text>();
 
         // Close menu
         menu.SetActive(false);

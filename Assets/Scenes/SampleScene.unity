@@ -218,6 +218,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pfPathfindingDebugStepVisualNode: {fileID: 759931248392495012, guid: 75b9b881b7fd76146b1514979d483d9d,
     type: 3}
+  nodeDefault: {fileID: 2100000, guid: f144382e25b30d344b12005dc5624b7c, type: 2}
+  nodeClosed: {fileID: 2100000, guid: 2f88b0ccca3660749ab59634abc02f61, type: 2}
+  nodeSearched: {fileID: 2100000, guid: ac3e7f5d46c1f5646af4cee140c14f1f, type: 2}
+  nodeSearching: {fileID: 2100000, guid: 178addc24a0dae54491f24936ad4dc4c, type: 2}
+  nodeWall: {fileID: 2100000, guid: 53fd4f8986744a041bfd539351967adc, type: 2}
+  control: {fileID: 654728950}
 --- !u!4 &351107483
 Transform:
   m_ObjectHideFlags: 0
@@ -238,6 +244,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7903874370197058157}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &654728950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7903874370042297489, guid: 9aee0513051ae1d4dba5076b45dde9fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 7903874370197058157}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654728949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32fac2c34adc8d843814a6b5638b58c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &654728953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,9 +492,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903874370042297495, guid: 9aee0513051ae1d4dba5076b45dde9fa,
         type: 3}
+      propertyPath: control
+      value: 
+      objectReference: {fileID: 654728950}
+    - target: {fileID: 7903874370042297495, guid: 9aee0513051ae1d4dba5076b45dde9fa,
+        type: 3}
+      propertyPath: goalObject
+      value: 
+      objectReference: {fileID: 4287334473810959943, guid: 069c3d62e8b510e45b7fa61e02381641,
+        type: 3}
+    - target: {fileID: 7903874370042297495, guid: 9aee0513051ae1d4dba5076b45dde9fa,
+        type: 3}
       propertyPath: stepVisual
       value: 
       objectReference: {fileID: 351107482}
+    - target: {fileID: 7903874370042297495, guid: 9aee0513051ae1d4dba5076b45dde9fa,
+        type: 3}
+      propertyPath: wallObject
+      value: 
+      objectReference: {fileID: 967139860700093146, guid: 292645370ebc140468da365aaaab5174,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 4802776255477127922, guid: 9aee0513051ae1d4dba5076b45dde9fa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9aee0513051ae1d4dba5076b45dde9fa, type: 3}
