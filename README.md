@@ -1,2 +1,3 @@
-# 3D-pathfinding-demonstration
-An interactive system to test, visualize, and analyze node-based pathfinding systems in a three-dimensional space.
+# 3D Pathfinding Demonstration
+CURRENTLY IN DEVELOPMENT
+A test environment for implementing node-based pathfinding algorythms in a voxelized 3D environment.
