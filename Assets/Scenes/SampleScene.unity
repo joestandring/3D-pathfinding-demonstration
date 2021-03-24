@@ -256,6 +256,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fac2c34adc8d843814a6b5638b58c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &654728951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654728949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f23aaa7c809df47acbed390ea7daab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 3156730719320401158, guid: 52e7ed393c5080546979587b836fa9fb, type: 3}
+  stepVisual: {fileID: 351107482}
+  control: {fileID: 654728950}
+  wallObject: {fileID: 967139860700093146, guid: 292645370ebc140468da365aaaab5174,
+    type: 3}
+  goalObject: {fileID: 4287334473810959943, guid: 069c3d62e8b510e45b7fa61e02381641,
+    type: 3}
+--- !u!114 &654728952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654728949}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ff3bb9d97c11b48a29f892fdb04b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 3156730719320401158, guid: 52e7ed393c5080546979587b836fa9fb, type: 3}
+  stepVisual: {fileID: 351107482}
+  control: {fileID: 654728950}
+  wallObject: {fileID: 967139860700093146, guid: 292645370ebc140468da365aaaab5174,
+    type: 3}
+  goalObject: {fileID: 4287334473810959943, guid: 069c3d62e8b510e45b7fa61e02381641,
+    type: 3}
 --- !u!114 &654728953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +533,11 @@ PrefabInstance:
       propertyPath: control
       value: 
       objectReference: {fileID: 654728950}
+    - target: {fileID: 7903874370042297495, guid: 9aee0513051ae1d4dba5076b45dde9fa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7903874370042297495, guid: 9aee0513051ae1d4dba5076b45dde9fa,
         type: 3}
       propertyPath: goalObject

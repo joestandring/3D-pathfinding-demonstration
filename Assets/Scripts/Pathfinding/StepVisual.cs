@@ -35,13 +35,13 @@ public class StepVisual : MonoBehaviour
     void Update()
     {
         // Go to previous snapshot
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             ShowPreviousSnapshot();
         }
 
         // Advance one snapshot
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             ShowNextSnapshot();
         }
@@ -123,7 +123,7 @@ public class StepVisual : MonoBehaviour
     // Create the text fields for the visual nodes
     void SetupVisualNode(Transform visualNodeTransform, int g, int h, int f)
     {
-        if (f < 1000)
+        if (f < 1000 && f > 0)
         {
             visualNodeTransform.GetChild(0).GetComponent<TextMeshPro>().SetText(f.ToString());
             visualNodeTransform.GetChild(1).GetComponent<TextMeshPro>().SetText(g.ToString());

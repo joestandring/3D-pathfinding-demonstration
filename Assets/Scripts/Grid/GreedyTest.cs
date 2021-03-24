@@ -7,16 +7,16 @@ using TMPro;
 using System.IO;
 
 // Creation of basic grid 
-public class MakeGrid : MonoBehaviour
+public class GreedyTest : MonoBehaviour
 {
-    readonly int width = 10;
-    readonly int height = 10;
-    readonly int depth = 10;
+    readonly int width = 5;
+    readonly int height = 5;
+    readonly int depth = 5;
     readonly int nodeSize = 10;
     readonly Vector3 origin = Vector3.zero;
     public GameObject cam;
     public NodeGrid<Node> nodeGrid;
-    AStar aStar;
+    Greedy greedy;
     [SerializeField] StepVisual stepVisual;
     public Control control;
     public GameObject wallObject;
@@ -25,23 +25,23 @@ public class MakeGrid : MonoBehaviour
     readonly int startX = 0;
     readonly int startY = 0;
     readonly int startZ = 0;
-    readonly int goalX = 9;
-    readonly int goalY = 9;
-    readonly int goalZ = 9;
+    readonly int goalX = 3;
+    readonly int goalY = 3;
+    readonly int goalZ = 3;
 
     void Start()
     {
         // A*
-        aStar = new AStar(width, height, depth, nodeSize, origin);
+        greedy = new Greedy(width, height, depth, nodeSize, origin);
 
         // Create main camera
         Vector3 position = new Vector3(width * -6, height * 18, depth * -6);
         Instantiate(cam, position, cam.transform.rotation);
 
-        grid = aStar.GetGrid();
+        grid = greedy.GetGrid();
 
         // Add walls manually
-        aStar.GetNode(5, 5, 5).SetWalkable(!aStar.GetNode(5, 5, 5).isWalkable);
+        greedy.GetNode(2, 2, 2).SetWalkable(!greedy.GetNode(2, 2, 2).isWalkable);
 
         // Draw walls
         DrawWalls();
@@ -58,17 +58,17 @@ public class MakeGrid : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            control.snapshotStatus.text = "Running A* pathfinding algorithm...";
+            control.snapshotStatus.text = "Running Greedy Best-First-Search pathfinding algorithm...";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            List<Node> path = aStar.FindPath(startX, startY, startZ, goalX, goalY, goalZ);
+            List<Node> path = greedy.FindPath(startX, startY, startZ, goalX, goalY, goalZ);
             stopwatch.Stop();
             control.snapshotStatus.text = "Pathfinding complete!";
 
             long timeToComplete = stopwatch.ElapsedMilliseconds;
             int pathedNodes = path.Count;
-            int openListSize = aStar.openList.Count;
-            int closedListSize = aStar.closedList.Count;
+            int openListSize = greedy.frontier.Count;
+            int closedListSize = greedy.closedList.Count;
             int totalNodesSearched = openListSize + closedListSize;
             int totalMoveCost = path[path.Count - 1].g;
 
@@ -95,7 +95,7 @@ public class MakeGrid : MonoBehaviour
 
             // Write test results to file
             writer.WriteLine("'Algorythm', 'Time to complete (ms)', 'Number of pathed nodes', 'Total nodes searched', 'Open list size', 'Closed list size', 'Total move cost (g)'");
-            writer.WriteLine($"AStar, {timeToComplete}, {pathedNodes}, {totalNodesSearched}, {openListSize}, {closedListSize}, {totalMoveCost}");
+            writer.WriteLine($"Greedy, {timeToComplete}, {pathedNodes}, {totalNodesSearched}, {openListSize}, {closedListSize}, {totalMoveCost}");
             writer.Close();
             UnityEngine.Debug.Log($"Results written to: {pathString}");
         }
