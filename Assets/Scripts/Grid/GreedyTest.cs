@@ -67,7 +67,7 @@ public class GreedyTest : MonoBehaviour
 
             long timeToComplete = stopwatch.ElapsedMilliseconds;
             int pathedNodes = path.Count;
-            int openListSize = greedy.frontier.Count;
+            int openListSize = greedy.openList.Count;
             int closedListSize = greedy.closedList.Count;
             int totalNodesSearched = openListSize + closedListSize;
             int totalMoveCost = path[path.Count - 1].g;

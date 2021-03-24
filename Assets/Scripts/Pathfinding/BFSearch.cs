@@ -27,56 +27,6 @@ public class BFSearch
     // Find path between start and end coordinates
     public List<Node> FindPath(int startX, int startY, int startZ, int endX, int endY, int endZ)
     {
-        //// Get starting node
-        //Node startNode = grid.GetGridObject(startX, startY, startZ);
-        //// Get last node
-        //Node endNode = grid.GetGridObject(endX, endY, endZ);
-
-        //closedList = new List<Node>();
-        //frontier = new List<Node> { startNode };
-
-        //// Get starting snapshot
-        //StepVisual.Instance.ClearSnapshots();
-        //StepVisual.Instance.TakeSnapshot(grid, startNode, frontier, closedList);
-
-        //// cycle until open list empty
-        //while (frontier.Count > 0)
-        //{
-        //    Node current = frontier[0];
-
-        //    // Get path to last node if last node
-        //    if (current == endNode)
-        //    {
-        //        // Take snapshot
-        //        StepVisual.Instance.TakeSnapshot(grid, current, frontier, closedList);
-        //        StepVisual.Instance.FinalPathSnapshot(grid, GetPath(endNode));
-
-        //        return GetPath(endNode);
-        //    }
-
-        //    closedList.Add(current);
-        //    frontier.Remove(current);
-
-        //    foreach (Node neighbor in GetNeighbors(current))
-        //    {
-        //        // Only add to neighbor list if node is walkable
-        //        if (!neighbor.isWalkable)
-        //        {
-        //            closedList.Add(neighbor);
-        //            continue;
-        //        }
-        //        if (!frontier.Contains(neighbor))
-        //        {
-        //            frontier.Add(neighbor);
-        //            neighbor.lastNode = current;
-        //        }
-        //        StepVisual.Instance.TakeSnapshot(grid, current, frontier, closedList);
-        //    }
-        //}
-
-        //// Out of nodes
-        //return null;
-
         startNode = grid.GetGridObject(startX, startY, startZ);
         Node endNode = grid.GetGridObject(endX, endY, endZ);
 
@@ -92,8 +42,6 @@ public class BFSearch
 
             if (current == endNode)
             {
-                Debug.Log("FINAL NODE REACHED");
-
                 StepVisual.Instance.TakeSnapshot(grid, current, openList, closedList);
                 StepVisual.Instance.FinalPathSnapshot(grid, GetPath(endNode));
 
@@ -293,4 +241,3 @@ public class BFSearch
         return grid.GetGridObject(x, y, z);
     }
 }
-
