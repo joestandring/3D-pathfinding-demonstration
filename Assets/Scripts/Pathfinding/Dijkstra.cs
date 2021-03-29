@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Greedy
+// Implementation of AStar algorythm
+public class Dijkstra
 {
-    readonly NodeGrid<Node> grid;
-
-    // List of nodes on frontier checked
-    public List<Node> closedList;
-    // List of nodes on frontier unchecked
-    public List<Node> openList;
-
-    public Node startNode;
-
     // Basic costs
     readonly int straightCost = 10;
     readonly int diagonalCost = 14;
     readonly int diagonal3DCost = 17;
 
+    readonly NodeGrid<Node> grid;
+
+    // List of nodes not yet checked
+    public List<Node> openList;
+    // Lsit of nodes checked
+    public List<Node> closedList;
+
     // Create the grid
-    public Greedy(int width, int height, int depth, int nodeSize, Vector3 origin)
+    public Dijkstra(int width, int height, int depth, int nodeSize, Vector3 origin)
     {
         grid = new NodeGrid<Node>(width, height, depth, nodeSize, origin, (NodeGrid<Node> g, int x, int y, int z) => new Node(g, x, y, z));
     }
@@ -32,11 +31,13 @@ public class Greedy
     // Find path between start and end coordinates
     public List<Node> FindPath(int startX, int startY, int startZ, int endX, int endY, int endZ)
     {
-        startNode = grid.GetGridObject(startX, startY, startZ);
+        // Get starting node
+        Node startNode = grid.GetGridObject(startX, startY, startZ);
+        // Get last node
         Node endNode = grid.GetGridObject(endX, endY, endZ);
 
-        closedList = new List<Node>();
         openList = new List<Node> { startNode };
+        closedList = new List<Node>();
 
         // Calculate g and f cost for all nodes
         for (int x = 0; x < grid.GetWidth(); x++)
@@ -59,22 +60,31 @@ public class Greedy
         startNode.h = GetDistance(startNode, endNode);
         startNode.GetF();
 
+        // Get starting snapshot
         StepVisual.Instance.ClearSnapshots();
         StepVisual.Instance.TakeSnapshot(grid, startNode, openList, closedList);
 
+        // cycle until open list empty
         while (openList.Count > 0)
         {
             // Get the node with the least f cost
             Node current = GetCheapestNode(openList);
 
+            // Get path to last node if last node
             if (current == endNode)
             {
+                // Take snapshot
                 StepVisual.Instance.TakeSnapshot(grid, current, openList, closedList);
                 StepVisual.Instance.FinalPathSnapshot(grid, GetPath(endNode));
 
-                return (GetPath(endNode));
+                return GetPath(endNode);
             }
 
+            // Remove current node from open list and put into closed list
+            openList.Remove(current);
+            closedList.Add(current);
+
+            // Cycle node neighbours
             foreach (Node neighbor in GetNeighbors(current))
             {
                 if (closedList.Contains(neighbor)) continue;
@@ -92,9 +102,6 @@ public class Greedy
                     continue;
                 }
 
-                neighbor.lastNode = current;
-                neighbor.h = GetDistance(neighbor, endNode);
-
                 int tentativeG = current.g + GetDistance(current, neighbor);
 
                 if (!openList.Contains(neighbor))
@@ -108,33 +115,10 @@ public class Greedy
 
                 StepVisual.Instance.TakeSnapshot(grid, current, openList, closedList);
             }
-
-            openList.Remove(current);
-            closedList.Add(current);
         }
 
+        // Out of nodes
         return null;
-    }
-
-    // Get the final path
-    List<Node> GetPath(Node endNode)
-    {
-        List<Node> path = new List<Node>
-        {
-            endNode
-        };
-        Node current = endNode;
-
-        // Retrace steps to starting node
-        while (current.lastNode != startNode)
-        {
-            path.Add(current.lastNode);
-            current = current.lastNode;
-        }
-
-        path.Reverse();
-
-        return path;
     }
 
     // Add all neighbors to the neighbors list
@@ -282,16 +266,37 @@ public class Greedy
         return grid.GetGridObject(x, y, z);
     }
 
+    // Get the final path
+    List<Node> GetPath(Node endNode)
+    {
+        List<Node> path = new List<Node>
+        {
+            endNode
+        };
+        Node current = endNode;
+
+        // Retrace steps to starting node
+        while (current.lastNode != null)
+        {
+            path.Add(current.lastNode);
+            current = current.lastNode;
+        }
+
+        path.Reverse();
+
+        return path;
+    }
+
     // Gets the node with the lowest f cost
     Node GetCheapestNode(List<Node> nodes)
     {
         Node cheapest = nodes[0];
         // Get cheapest node in the list
-        foreach(Node node in nodes)
+        for (int i = 1; i < nodes.Count; i++)
         {
-            if (node.h < cheapest.h)
+            if (nodes[i].f < cheapest.f)
             {
-                cheapest = node;
+                cheapest = nodes[i];
             }
         }
 

@@ -145,7 +145,7 @@ public class StepVisual : MonoBehaviour
             snapshotIndex++;
             GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
             gridSnapshotAction.TriggerAction();
-            control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
+            control.snapshotStatus.text = "Press ENTER to move to next algorithm\nSnapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
         }
     }
 
@@ -157,7 +157,7 @@ public class StepVisual : MonoBehaviour
             snapshotIndex--;
             GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
             gridSnapshotAction.TriggerAction();
-            control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" +gridSnapshotActions.Count;
+            control.snapshotStatus.text = "Press ENTER to move to next algorithm\nSnapshot index: " + (snapshotIndex + 1) + "/" +gridSnapshotActions.Count;
         }
     }
 
@@ -167,7 +167,7 @@ public class StepVisual : MonoBehaviour
         snapshotIndex = 0;
         GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
         gridSnapshotAction.TriggerAction();
-        control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
+        control.snapshotStatus.text = "Press ENTER to move to next algorithm\nSnapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
     }
 
     // Go to last snapshot
@@ -176,7 +176,7 @@ public class StepVisual : MonoBehaviour
         snapshotIndex = gridSnapshotActions.Count - 1;
         GridSnapshotAction gridSnapshotAction = gridSnapshotActions[snapshotIndex];
         gridSnapshotAction.TriggerAction();
-        control.snapshotStatus.text = "Snapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
+        control.snapshotStatus.text = "Press ENTER to move to next algorithm\nSnapshot index: " + (snapshotIndex + 1) + "/" + gridSnapshotActions.Count;
     }
 
     public void ClearSnapshots()

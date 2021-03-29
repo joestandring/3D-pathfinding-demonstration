@@ -89,6 +89,12 @@ public class AStar
             {
                 if (closedList.Contains(neighbor)) continue;
 
+                // If node is weighted, add move penalty
+                if (neighbor.isWeighted)
+                {
+                    neighbor.g += 5;
+                }
+
                 // Only add to neighbor list if node is walkable
                 if (!neighbor.isWalkable)
                 {

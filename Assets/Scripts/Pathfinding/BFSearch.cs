@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BFSearch
 {
+    // Basic costs
+    readonly int straightCost = 10;
+    readonly int diagonalCost = 14;
+    readonly int diagonal3DCost = 17;
+
     readonly NodeGrid<Node> grid;
 
     // List of nodes on frontier checked
@@ -33,6 +38,27 @@ public class BFSearch
         closedList = new List<Node>();
         openList = new List<Node> { startNode };
 
+        // Calculate g and f cost for all nodes
+        for (int x = 0; x < grid.GetWidth(); x++)
+        {
+            for (int y = 0; y < grid.GetHeight(); y++)
+            {
+                for (int z = 0; z < grid.GetDepth(); z++)
+                {
+                    Node node = grid.GetGridObject(x, y, z);
+                    // Make g cost infinite
+                    node.g = int.MaxValue;
+                    node.GetF();
+                    // Clear data from previous path
+                    node.lastNode = null;
+                }
+            }
+        }
+
+        startNode.g = 0;
+        startNode.h = GetDistance(startNode, endNode);
+        startNode.GetF();
+
         StepVisual.Instance.ClearSnapshots();
         StepVisual.Instance.TakeSnapshot(grid, startNode, openList, closedList);
 
@@ -52,6 +78,12 @@ public class BFSearch
             {
                 if (closedList.Contains(neighbor)) continue;
 
+                // If node is weighted, add move penalty
+                if (neighbor.isWeighted)
+                {
+                    neighbor.g += 5;
+                }
+
                 // Only add to neighbor list if node is walkable
                 if (!neighbor.isWalkable)
                 {
@@ -59,9 +91,14 @@ public class BFSearch
                     continue;
                 }
 
+                int tentativeG = current.g + GetDistance(current, neighbor);
+
                 if (!openList.Contains(neighbor))
                 {
                     neighbor.lastNode = current;
+                    neighbor.g = tentativeG;
+                    neighbor.h = GetDistance(neighbor, endNode);
+                    neighbor.GetF();
                     openList.Add(neighbor);
                 }
 
@@ -239,5 +276,33 @@ public class BFSearch
     public Node GetNode(int x, int y, int z)
     {
         return grid.GetGridObject(x, y, z);
+    }
+
+    // Get distance cost between start and end node
+    int GetDistance(Node start, Node end)
+    {
+        int xDist = Mathf.Abs(start.x - end.x);
+        int yDist = Mathf.Abs(start.y - end.y);
+        int zDist = Mathf.Abs(start.z - end.z);
+        List<int> distances = new List<int>
+        {
+            xDist, yDist, zDist
+        };
+
+        // Sort list (lowest to highest)
+        distances.Sort();
+
+        // Number of tiles to move on 3 axis at once
+        int diagonal3D = distances[0];
+
+        // Number of tiles to move on 2 axis at once
+        int diagonal = distances[1] - distances[0];
+
+        // Number of tiles to move on 1 axis
+        int straight = distances[2] - (diagonal3D + diagonal);
+
+        int finalDist = (diagonal3DCost * diagonal3D) + (diagonalCost * diagonal) + (straightCost * straight);
+
+        return finalDist;
     }
 }

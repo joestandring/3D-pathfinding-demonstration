@@ -9,35 +9,35 @@ public class Control : MonoBehaviour
 {
     bool linesEnabled = true;
     bool valuesEnabled = true;
-    bool menuEnabled = false;
+    //bool menuEnabled = false;
 
     GameObject[] lines;
     GameObject[] values;
-    GameObject menu;
+    //GameObject menu;
     GameObject cam;
     public Text snapshotStatus;
     public Text consoleText;
 
     public GameObject ui;
 
-    private void Start()
+    public void SetupNewCamera()
     {
         Instantiate(ui);
 
         lines = GameObject.FindGameObjectsWithTag("Line");
         values = GameObject.FindGameObjectsWithTag("Value");
-        menu = GameObject.FindGameObjectWithTag("Menu");
+        //menu = GameObject.FindGameObjectWithTag("Menu");
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         snapshotStatus = GameObject.FindGameObjectWithTag("Status").GetComponent<Text>();
         consoleText = GameObject.FindGameObjectWithTag("Console").GetComponent<Text>();
 
         // Close menu
-        menu.SetActive(false);
+        //menu.SetActive(false);
 
         // Enable camera control
         cam.GetComponent<FreeFlyCamera>().enabled = true;
 
-        menuEnabled = false;
+        //menuEnabled = false;
     }
 
     void Update()
@@ -93,32 +93,32 @@ public class Control : MonoBehaviour
         }
 
         // Toggle menu
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            // Disable
-            if (menuEnabled)
-            {
-                menu.SetActive(false);
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    // Disable
+        //    if (menuEnabled)
+        //    {
+        //        menu.SetActive(false);
 
-                // Enable camera control
-                cam.GetComponent<FreeFlyCamera>().enabled = true;
+        //        // Enable camera control
+        //        cam.GetComponent<FreeFlyCamera>().enabled = true;
 
-                menuEnabled = false;
-            }
-            // Enable
-            else
-            {
-                menu.SetActive(true);
+        //        menuEnabled = false;
+        //    }
+        //    // Enable
+        //    else
+        //    {
+        //        menu.SetActive(true);
 
-                // Release and make cursor visible
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+        //        // Release and make cursor visible
+        //        Cursor.lockState = CursorLockMode.None;
+        //        Cursor.visible = true;
 
-                // Disable camera control
-                cam.GetComponent<FreeFlyCamera>().enabled = false;
+        //        // Disable camera control
+        //        cam.GetComponent<FreeFlyCamera>().enabled = false;
 
-                menuEnabled = true;
-            }
-        }
+        //        menuEnabled = true;
+        //    }
+        //}
     }
 }

@@ -19,6 +19,8 @@ public class Node
     public int f;
 
     public bool isWalkable;
+    public bool isWeighted;
+
     public Node lastNode;
 
     public Node(NodeGrid<Node> grid, int x, int y, int z)
@@ -45,6 +47,13 @@ public class Node
     public void SetWalkable(bool isWalkable)
     {
         this.isWalkable = isWalkable;
+        grid.TriggerGridObjectChanged(x, y, z);
+    }
+
+    // Toggle if node is weighted
+    public void SetWeighted(bool isWeighted)
+    {
+        this.isWeighted = isWeighted;
         grid.TriggerGridObjectChanged(x, y, z);
     }
 }
