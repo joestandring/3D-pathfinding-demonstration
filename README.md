@@ -22,7 +22,7 @@ This tool was initially developed as a test environment for research into the ef
 ## Installation
 Currently, the build will not run correctly outside of the Unity editor. This means that the project needs to be imported into Unity and run via play mode.
 1. Download the latest .unitypackage in releases
-2. Open the package in unity
+2. Open the package in Unity
 ## Useage
 As the level editor is being worked on, changes to the environment need to be made in-code. This will be updated.
 1. Press the "play" button in the Unity editor
