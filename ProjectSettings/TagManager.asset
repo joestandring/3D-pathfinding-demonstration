@@ -9,6 +9,7 @@ TagManager:
   - Menu
   - Status
   - Console
+  - LevelStatus
   layers:
   - Default
   - TransparentFX

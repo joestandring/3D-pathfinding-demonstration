@@ -81,7 +81,7 @@ public class BFSearch
                 // If node is weighted, add move penalty
                 if (neighbor.isWeighted)
                 {
-                    neighbor.g += 5;
+                    neighbor.g += 10;
                 }
 
                 // Only add to neighbor list if node is walkable

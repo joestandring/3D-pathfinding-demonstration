@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Implementation of AStar algorythm
+// Implementation of AStar algorithm
 public class Dijkstra
 {
     // Basic costs
@@ -92,7 +92,7 @@ public class Dijkstra
                 // If node is weighted, add move penalty
                 if (neighbor.isWeighted)
                 {
-                    neighbor.g += 5;
+                    neighbor.g += 10;
                 }
 
                 // Only add to neighbor list if node is walkable

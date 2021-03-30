@@ -94,7 +94,7 @@ public class BFSearchTest : MonoBehaviour
             StreamWriter writer = new StreamWriter(pathString, true);
 
             // Write test results to file
-            writer.WriteLine("'Algorythm', 'Time to complete (ms)', 'Number of pathed nodes', 'Total nodes searched', 'Open list size', 'Closed list size', 'Total move cost (g)'");
+            writer.WriteLine("'algorithm', 'Time to complete (ms)', 'Number of pathed nodes', 'Total nodes searched', 'Open list size', 'Closed list size', 'Total move cost (g)'");
             writer.WriteLine($"BFSearch, {timeToComplete}, {pathedNodes}, {totalNodesSearched}, {openListSize}, {closedListSize}, {totalMoveCost}");
             writer.Close();
             UnityEngine.Debug.Log($"Results written to: {pathString}");

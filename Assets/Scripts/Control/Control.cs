@@ -17,6 +17,7 @@ public class Control : MonoBehaviour
     GameObject cam;
     public Text snapshotStatus;
     public Text consoleText;
+    public Text levelText;
 
     public GameObject ui;
 
@@ -24,12 +25,12 @@ public class Control : MonoBehaviour
     {
         Instantiate(ui);
 
-        lines = GameObject.FindGameObjectsWithTag("Line");
         values = GameObject.FindGameObjectsWithTag("Value");
         //menu = GameObject.FindGameObjectWithTag("Menu");
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         snapshotStatus = GameObject.FindGameObjectWithTag("Status").GetComponent<Text>();
         consoleText = GameObject.FindGameObjectWithTag("Console").GetComponent<Text>();
+        levelText = GameObject.FindGameObjectWithTag("LevelStatus").GetComponent<Text>();
 
         // Close menu
         //menu.SetActive(false);
@@ -38,6 +39,11 @@ public class Control : MonoBehaviour
         cam.GetComponent<FreeFlyCamera>().enabled = true;
 
         //menuEnabled = false;
+    }
+
+    public void GetLines()
+    {
+        lines = GameObject.FindGameObjectsWithTag("Line");
     }
 
     void Update()

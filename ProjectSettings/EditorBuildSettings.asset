@@ -14,4 +14,43 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level 1/Level 1 Dijkstra.unity
     guid: 5b7f610f8daf78d43a86a5ea7f87eed6
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 1/Level 1 Greedy.unity
+    guid: 752fdc604c8a7554fb65ec2125f1408c
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 2/Level 2 AStar.unity
+    guid: d841d54cd0fb3f44eb87a4f5deffb5d5
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 2/Level 2 BFSearch.unity
+    guid: b4db4d05f9c614844b1268be61af6e15
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 2/Level 2 Dijkstra.unity
+    guid: 0a8dd0392ce383a479e9e65d31518cd8
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 2/Level 2 Greedy.unity
+    guid: e7f95ce634f579c48901086f5841b8eb
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 3/Level 3 AStar.unity
+    guid: d3f21699de419a64c87a03d656987e1f
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 3/Level 3 BFSearch.unity
+    guid: de0149315fcd62c4ca33c907791768c2
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 3/Level 3 Dijkstra.unity
+    guid: 89566fc41b9ff2d40961cbb154433133
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 3/Level 3 Greedy.unity
+    guid: c5f5537261c0a354290e20ef79fc7eee
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 4/Level 4 AStar.unity
+    guid: 206fb1736810a5d47bc3626c8183fcd0
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 4/Level 4 BFSearch.unity
+    guid: 415f21012bb93d64caa7b7010f091e93
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 4/Level 4 Dijkstra.unity
+    guid: f2f6b131493d20147abdf1585f77fac1
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 4/Level 4 Greedy.unity
+    guid: dfdd74f33bb7fcf4cbbba20eea473f1e
   m_configObjects: {}
