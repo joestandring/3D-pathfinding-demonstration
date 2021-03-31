@@ -67,6 +67,9 @@ public class Dijkstra
         // cycle until open list empty
         while (openList.Count > 0)
         {
+            openList.Sort((node1, node2) => node1.g.CompareTo(node2.g));
+            Debug.Log(openList);
+
             // Get the node with the least f cost
             Node current = GetCheapestNode(openList);
 
@@ -103,6 +106,10 @@ public class Dijkstra
                 }
 
                 int tentativeG = current.g + GetDistance(current, neighbor);
+                if (neighbor.isWeighted)
+                {
+                    tentativeG += 10;
+                }
 
                 if (!openList.Contains(neighbor))
                 {

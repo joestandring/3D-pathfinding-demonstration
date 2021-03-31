@@ -92,6 +92,10 @@ public class BFSearch
                 }
 
                 int tentativeG = current.g + GetDistance(current, neighbor);
+                if (neighbor.isWeighted)
+                {
+                    tentativeG += 10;
+                }
 
                 if (!openList.Contains(neighbor))
                 {

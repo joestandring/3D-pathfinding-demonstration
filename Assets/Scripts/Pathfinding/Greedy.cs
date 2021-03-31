@@ -82,6 +82,7 @@ public class Greedy
                 // If node is weighted, add move penalty
                 if (neighbor.isWeighted)
                 {
+                    Debug.Log("neighbor is weighted");
                     neighbor.g += 10;
                 }
 
@@ -96,6 +97,10 @@ public class Greedy
                 neighbor.h = GetDistance(neighbor, endNode);
 
                 int tentativeG = current.g + GetDistance(current, neighbor);
+                if (neighbor.isWeighted)
+                {
+                    tentativeG += 10;
+                }
 
                 if (!openList.Contains(neighbor))
                 {

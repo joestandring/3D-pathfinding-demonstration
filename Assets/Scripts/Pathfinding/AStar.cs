@@ -103,6 +103,10 @@ public class AStar
                 }
 
                 int tentativeG = current.g + GetDistance(current, neighbor);
+                if (neighbor.isWeighted)
+                {
+                    tentativeG += 10;
+                }
 
                 // If there is a better path
                 if (tentativeG < neighbor.g)

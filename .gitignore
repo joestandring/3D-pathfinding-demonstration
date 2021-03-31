@@ -58,3 +58,10 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Ignore levels
+Assets/Scripts/Levels
+Assets/Scenes/Levels
+
+# Ignore results
+Results/
+
