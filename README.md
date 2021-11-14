@@ -3,7 +3,7 @@ A test environment for comparing 3D pathdinding algorythms in a voxelized enviro
 
 THIS PROJECT IS A WORK IN PROGRESS. MANY CORE FEATURES ARE NOT COMPLETE.
 
-![example](example.png)
+![example](https://raw.githubusercontent.com/joestandring/3D-pathfinding-demonstration/main/example.png)
 
 This tool was initially developed as a test environment for research into the efficiency of various pathfinding algorithms in a voxelized 3D space, and therefore the original "levels" used to test the algorithms have been included in the "research-build" branch. This branch will not be developed, however is kept to allow reproduction of test results.
 
